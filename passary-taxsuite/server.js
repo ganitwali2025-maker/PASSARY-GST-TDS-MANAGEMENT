@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3001;
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = process.env.VERCEL ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
 const STORE_FILE = path.join(DATA_DIR, 'store.json');
 
 const app = express();
@@ -91,7 +91,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  ensureStore();
-  console.log(`Passary Refractories TaxSuite running at http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    ensureStore();
+    console.log(`Passary Refractories TaxSuite running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
