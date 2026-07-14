@@ -272,6 +272,16 @@ main{flex:1; padding:28px 32px 64px;}
 }
 .co-card:hover .access-btn, .access-btn:hover{background:var(--accent); color:#fff; border-color:var(--accent); transform:translateX(2px);}
 .colored-card .access-btn:hover{background:rgba(255,255,255,0.4) !important; color:#fff !important; transform:translateX(2px);}
+.shortname-underline {
+  height: 1.5px;
+  background: var(--accent);
+  width: 0;
+  margin-top: 6px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.co-card:hover .shortname-underline {
+  width: 100%;
+}
 
 /* ---------------- WORKSPACE: 2 BIG CARDS ---------------- */
 .workspace-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:22px; max-width:900px;}

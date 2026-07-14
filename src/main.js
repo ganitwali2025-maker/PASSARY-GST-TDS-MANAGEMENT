@@ -236,7 +236,10 @@ function renderHome(main){
           <div class="co-top">
             <div style="display:flex; align-items:center; gap:0;">
               <div>${c.icon||esc(c.shortName.slice(0,2))}</div>
-              <h3 style="margin:0 0 0 -10px; line-height:1; font-size:22px; color:#94A774;">${esc(c.shortName)}</h3>
+              <div style="display:flex; flex-direction:column; align-items:flex-start; margin-left:-10px;">
+                <h3 style="margin:0; line-height:1; font-size:22px; color:#94A774;">${esc(c.shortName)}</h3>
+                <div class="shortname-underline"></div>
+              </div>
             </div>
           </div>
           <p class="full">${esc(c.fullName)}</p>
