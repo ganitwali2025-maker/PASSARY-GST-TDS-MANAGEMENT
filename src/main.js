@@ -1,4 +1,4 @@
-import { createIcons, LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut } from 'lucide';
+import { createIcons, LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut, ArrowLeft, Menu } from 'lucide';
 
 /* ============================================================
    STATE
@@ -155,7 +155,7 @@ function renderTopbarRight(){
   const box = document.getElementById('topbarRight');
   const insideCompany = view.companyId && ['workspace','gstModules','tdsModules','detail'].includes(view.screen);
   if(insideCompany){
-    box.innerHTML = `<button class="topbar-back-btn" id="topbarBackBtn">← Back</button>`;
+    box.innerHTML = `<button class="topbar-back-btn" id="topbarBackBtn"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</button>`;
     document.getElementById('topbarBackBtn').onclick = ()=>{
       if(view.screen==='workspace'){ view={screen:'home',companyId:null,moduleId:null,category:null}; }
       else if(view.screen==='gstModules' || view.screen==='tdsModules'){ view={screen:'workspace', companyId:view.companyId, moduleId:null, category:null}; }
@@ -199,7 +199,7 @@ function renderNav(){
   document.getElementById('logoutNav').onclick = ()=>{ view={screen:'loggedOut'}; render(); };
 
   createIcons({
-    icons: { LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut }
+    icons: { LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut, ArrowLeft, Menu }
   });
 }
 
@@ -219,27 +219,29 @@ function renderBadge(){
 function renderBreadcrumb(){
   const bc = document.getElementById('breadcrumb');
   const parts = [];
-  parts.push(`<span class="seg crumbtn" data-go="home">Home</span>`);
+  parts.push(`<span class="seg home crumbtn" data-go="home">Home</span>`);
+  const sep = `<span class="sep">›</span>`;
   if(view.companyId){
     const c = getCompany(view.companyId);
-    parts.push(`<span>›</span><b class="seg crumbtn" data-go="workspace">${esc(c ? c.fullName : '')}</b>`);
+    const isCompanyPage = view.screen === 'workspace';
+    parts.push(`${sep}<span class="seg crumbtn ${isCompanyPage?'company-title':'current'}" data-go="workspace">${esc(c ? c.fullName : '')}</span>`);
   }
   if(view.screen==='gstModules' || (view.screen==='detail' && view.category==='gst')){
-    parts.push(`<span>›</span><span class="seg crumbtn" data-go="gstModules">GST Working</span>`);
+    parts.push(`${sep}<span class="seg crumbtn current" data-go="gstModules">GST Working</span>`);
   }
   if(view.screen==='tdsModules' || (view.screen==='detail' && view.category==='tds')){
-    parts.push(`<span>›</span><span class="seg crumbtn" data-go="tdsModules">TDS Working</span>`);
+    parts.push(`${sep}<span class="seg crumbtn current" data-go="tdsModules">TDS Working</span>`);
   }
   if(view.screen==='detail'){
     const mods = view.category==='gst'?GST_MODULES:TDS_MODULES;
     const m = mods.find(x=>x.id===view.moduleId);
-    parts.push(`<span>›</span><b>${esc(m?m.name:'')}</b>`);
+    parts.push(`${sep}<span class="current">${esc(m?m.name:'')}</span>`);
   }
-  if(['reports','calendar','users','settings'].includes(view.screen)){
-    const labels = {reports:'Reports', calendar:'Compliance Calendar', users:'User Management', settings:'Settings'};
-    parts.push(`<span>›</span><b>${labels[view.screen]}</b>`);
+  if(['reports','calendar','users','settings','dashboard','team','approval'].includes(view.screen)){
+    const labels = {reports:'Reports', calendar:'Compliance Calendar', users:'User Management', settings:'Settings', dashboard:'Dashboard', team:'Account Team', approval:'Approval Payment'};
+    parts.push(`${sep}<span class="current">${labels[view.screen]}</span>`);
   }
-  if(view.screen==='loggedOut'){ parts.push(`<span>›</span><b>Signed out</b>`); }
+  if(view.screen==='loggedOut'){ parts.push(`${sep}<span class="current">Signed out</span>`); }
   bc.innerHTML = parts.join('');
   bc.querySelectorAll('[data-go]').forEach(el=>{
     el.onclick = ()=>{

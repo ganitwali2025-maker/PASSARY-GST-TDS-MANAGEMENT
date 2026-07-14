@@ -82,14 +82,17 @@ button,select,input{font-family:inherit;}
 .content-area{flex:1; min-width:0; display:flex; flex-direction:column;}
 .topbar{
   display:flex; align-items:center; justify-content:space-between;
-  padding:18px 32px; position:sticky; top:0; z-index:5;
-  background:#fff; color:var(--ink);
-  border-bottom:1px solid var(--line); box-shadow:none;
+  height:72px; padding:0 24px; position:sticky; top:0; z-index:5;
+  background:#fff;
+  border-bottom:1px solid #E2E8F0;
 }
-.breadcrumb{display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--muted); flex-wrap:wrap;}
-.breadcrumb b{color:var(--ink); font-weight:700;}
-.breadcrumb .seg{cursor:pointer;}
-.breadcrumb .seg:hover{color:var(--blue); text-decoration:underline;}
+.breadcrumb{display:flex; align-items:center; gap:8px;}
+.breadcrumb .seg{cursor:pointer; transition: color 0.2s ease;}
+.breadcrumb .seg:hover{color:#0F172A;}
+.breadcrumb .seg.home{font-size:14px; font-weight:500; color:#64748B;}
+.breadcrumb .sep{color:#94A3B8; font-weight:500;}
+.breadcrumb .current{font-size:16px; font-weight:600; color:#0F172A;}
+.breadcrumb .company-title{font-size:18px; font-weight:700; color:#1E293B; letter-spacing:0.2px;}
 .topbar-right{display:flex; align-items:center; gap:14px;}
 .user-chip{
   display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line);
@@ -99,11 +102,13 @@ button,select,input{font-family:inherit;}
 .user-chip .av{width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--emerald),var(--teal)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:700;}
 .user-chip span{font-size:12.5px; font-weight:600; color:var(--ink);}
 .topbar-back-btn{
-  display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line);
-  color:var(--ink); padding:9px 18px; border-radius:30px; font-size:12.5px; font-weight:600; cursor:pointer;
-  backdrop-filter:none; transition:.15s;
+  display:flex; align-items:center; justify-content:center; gap:8px; 
+  background:#fff; border:1px solid #E2E8F0; color:#0F172A; 
+  height:40px; padding:0 16px; border-radius:12px; 
+  font-size:14px; font-weight:600; cursor:pointer;
+  transition:all 0.2s ease;
 }
-.topbar-back-btn:hover{background:var(--bg1); border-color:#c7cfe0; transform:translateX(-2px);}
+.topbar-back-btn:hover{background:#F8FAFC;}
 
 main{flex:1; padding:28px 32px 64px;}
 
