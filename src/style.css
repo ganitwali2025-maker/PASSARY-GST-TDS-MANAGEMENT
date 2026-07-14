@@ -55,7 +55,7 @@ button,select,input{font-family:inherit;}
 }
 .snav-item .ic{width:20px; text-align:center; font-size:15px;}
 .snav-item:hover{background:var(--bg1); color:var(--ink);}
-.snav-item.active{background:var(--blue-soft); color:var(--blue); box-shadow:none; border:1.5px solid transparent;}
+.snav-item.active{background:#B084F9; color:#fff; box-shadow:none; border:1.5px solid transparent;}
 .snav-divider{height:1px; background:var(--line); margin:14px 4px;}
 
 .active-company-badge{
