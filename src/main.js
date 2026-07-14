@@ -1,3 +1,5 @@
+import { createIcons, LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut } from 'lucide';
+
 /* ============================================================
    STATE
    ============================================================ */
@@ -27,11 +29,14 @@ const TDS_MODULES = [
 ];
 
 const NAV_ITEMS = [
-  {id:'home', icon:'🏠', label:'Home'},
-  {id:'reports', icon:'📊', label:'Reports'},
-  {id:'calendar', icon:'📅', label:'Compliance Calendar'},
-  {id:'users', icon:'👥', label:'User Management'},
-  {id:'settings', icon:'⚙️', label:'Settings'},
+  {id:'dashboard', icon:'layout-dashboard', label:'Dashboard'},
+  {id:'home', icon:'house', label:'Home'},
+  {id:'reports', icon:'bar-chart-3', label:'Reports'},
+  {id:'calendar', icon:'calendar-days', label:'Compliance Calendar'},
+  {id:'team', icon:'users', label:'Account Team'},
+  {id:'approval', icon:'wallet-cards', label:'Approval Payment'},
+  {id:'users', icon:'user-cog', label:'User Management'},
+  {id:'settings', icon:'settings', label:'Settings'}
 ];
 
 let state = null;
@@ -140,6 +145,9 @@ function render(){
   else if(view.screen==='calendar') renderCalendar(main);
   else if(view.screen==='users') renderUsers(main);
   else if(view.screen==='settings') renderSettings(main);
+  else if(view.screen==='dashboard') renderDashboard(main);
+  else if(view.screen==='team') renderAccountTeam(main);
+  else if(view.screen==='approval') renderApprovalPayment(main);
   else if(view.screen==='loggedOut') renderLoggedOut(main);
 }
 
@@ -155,7 +163,7 @@ function renderTopbarRight(){
       render();
     };
   } else {
-    box.innerHTML = `<div class="user-chip" id="logoutChip" title="Click to logout"><div class="av">FT</div><span>Finance Team</span><span style="opacity:.55; font-size:12px;">🚪</span></div>`;
+    box.innerHTML = `<div class="user-chip" id="logoutChip" title="Click to logout"><div class="av">FT</div><span>Finance Team</span></div>`;
     document.getElementById('logoutChip').onclick = ()=>{ view={screen:'loggedOut'}; render(); };
   }
 }
@@ -172,9 +180,9 @@ function renderNav(){
       (item.id===view.screen);
     const div = document.createElement('div');
     div.className = 'snav-item'+(active?' active':'');
-    div.innerHTML = `<span class="ic">${item.icon}</span><span>${item.label}</span>`;
+    div.innerHTML = `<span class="ic"><i data-lucide="${item.icon}"></i></span><span>${item.label}</span>`;
     div.onclick = ()=>{
-      if(item.id==='home'){ view = {screen:'home',companyId:null,moduleId:null,category:null}; }
+      if(item.id==='home' || item.id==='dashboard' || item.id==='team' || item.id==='approval'){ view = {screen:item.id,companyId:null,moduleId:null,category:null}; }
       else if(item.id==='gstEntry' || item.id==='tdsEntry'){
         const cid = state.activeCompanyId || state.companies[0].id;
         state.activeCompanyId = cid;
@@ -186,9 +194,13 @@ function renderNav(){
   });
   nav.insertAdjacentHTML('beforeend', `
     <div class="snav-divider"></div>
-    <div class="snav-item" id="logoutNav"><span class="ic">🚪</span><span>Logout</span></div>
+    <div class="snav-item" id="logoutNav"><span class="ic"><i data-lucide="log-out"></i></span><span>Logout</span></div>
   `);
   document.getElementById('logoutNav').onclick = ()=>{ view={screen:'loggedOut'}; render(); };
+
+  createIcons({
+    icons: { LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut }
+  });
 }
 
 function renderBadge(){
@@ -278,6 +290,18 @@ function renderHome(main){
   `;
   main.querySelectorAll('[data-access]').forEach(b=> b.onclick = ()=>openWorkspace(b.dataset.access));
   main.querySelectorAll('.co-card').forEach(card=> card.addEventListener('click', ()=> openWorkspace(card.dataset.cid)));
+}
+
+function renderDashboard(main){
+  main.innerHTML = `<div class="page-head"><h2>Dashboard</h2><p>Overview and key metrics.</p></div><div class="empty-state">Nothing here yet...</div>`;
+}
+
+function renderAccountTeam(main){
+  main.innerHTML = `<div class="page-head"><h2>Account Team</h2><p>Manage your team.</p></div><div class="empty-state">Nothing here yet...</div>`;
+}
+
+function renderApprovalPayment(main){
+  main.innerHTML = `<div class="page-head"><h2>Approval Payment</h2><p>Pending approvals and transactions.</p></div><div class="empty-state">Nothing here yet...</div>`;
 }
 function openWorkspace(cid){ state.activeCompanyId = cid; view = {screen:'workspace', companyId:cid, moduleId:null, category:null}; saveState(); render(); }
 
