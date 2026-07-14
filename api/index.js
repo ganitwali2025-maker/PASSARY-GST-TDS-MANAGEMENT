@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3001;
-const DATA_DIR = process.env.VERCEL ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
+const DATA_DIR = process.env.VERCEL ? path.join('/tmp', 'data') : path.join(__dirname, '../data');
 const STORE_FILE = path.join(DATA_DIR, 'store.json');
 
 const app = express();
@@ -86,9 +86,9 @@ app.delete('/api/storage/:key', (req, res) => {
 });
 
 /* ---------------- static frontend ---------------- */
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 if (!process.env.VERCEL) {
