@@ -28,8 +28,6 @@ const TDS_MODULES = [
 
 const NAV_ITEMS = [
   {id:'home', icon:'🏠', label:'Home'},
-  {id:'gstEntry', icon:'🧾', label:'GST Working'},
-  {id:'tdsEntry', icon:'📑', label:'TDS Working'},
   {id:'reports', icon:'📊', label:'Reports'},
   {id:'calendar', icon:'📅', label:'Compliance Calendar'},
   {id:'users', icon:'👥', label:'User Management'},
