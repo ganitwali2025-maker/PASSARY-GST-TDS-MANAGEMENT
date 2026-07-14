@@ -1,4 +1,4 @@
-import { createIcons, LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut, ArrowLeft, Menu } from 'lucide';
+import { createIcons, LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut, ArrowLeft, Menu, Search, Calendar, Bell } from 'lucide';
 
 /* ============================================================
    STATE
@@ -43,19 +43,23 @@ let state = null;
 let view = { screen:'home', companyId:null, moduleId:null, category:null };
 
 const MODULE_ACCENTS = {
-  blue: 'linear-gradient(135deg,#2563EB,#6D8BFF)',
-  emerald: 'linear-gradient(135deg,#10B981,#6EE7B7)',
-  purple: 'linear-gradient(135deg,#8B5CF6,#C4B5FD)',
-  teal: 'linear-gradient(135deg,#14B8A6,#5EEAD4)',
-  orange: 'linear-gradient(135deg,#F97316,#FDBA74)'
+  blue: 'var(--accent)', emerald: 'var(--accent)', purple: 'var(--accent)', teal: 'var(--accent)', orange: 'var(--accent)'
 };
+const GEOMETRIC_LOGO = `<svg viewBox="0 0 100 100" style="width:46px; height:46px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="50,15 70,40 50,65 30,40" fill="#94A774"/>
+  <polygon points="50,15 30,40 10,35 25,60 50,65" fill="#A8BD8A"/>
+  <polygon points="50,15 70,40 90,35 75,60 50,65" fill="#7A8F59"/>
+  <polygon points="50,65 25,60 35,85 50,95" fill="#889E66"/>
+  <polygon points="50,65 75,60 65,85 50,95" fill="#B5CA99"/>
+</svg>`;
+
 const COMPANY_SEED = [
-  {shortName:'PMMPL', fullName:'Passary Minerals Madhya Private Limited', icon:'🏭', accent:'linear-gradient(135deg,#2563EB,#6D8BFF)'},
-  {shortName:'RMIPL', fullName:'Refrasynth Minerals India Private Limited', icon:'🔥', accent:'linear-gradient(135deg,#F97316,#FDBA74)'},
-  {shortName:'PMPL', fullName:'Passary Minerals Private Limited', icon:'📦', accent:'linear-gradient(135deg,#8B5CF6,#C4B5FD)'},
-  {shortName:'PURABH', fullName:'Passary Minerals Purabh Private Limited', icon:'☀️', accent:'linear-gradient(135deg,#F59E0B,#FDE68A)'},
-  {shortName:'APPLICATION', fullName:'Refratech Application Services Private Limited', icon:'⚙️', accent:'linear-gradient(135deg,#14B8A6,#5EEAD4)'},
-  {shortName:'PASMIN', fullName:'Pasmin Engineering LLP', icon:'🏢', accent:'linear-gradient(135deg,#10B981,#6EE7B7)'}
+  {shortName:'PMMPL', fullName:'Passary Minerals Madhya Private Limited', icon:'<img src="/icons/image.png" style="width:72px; height:72px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">', accent:'linear-gradient(135deg, #60A5FA, #3B82F6)'},
+  {shortName:'RMIPL', fullName:'Refrasynth Minerals India Private Limited', icon:'<img src="/icons/image.png" style="width:72px; height:72px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">', accent:'linear-gradient(135deg, #FB923C, #EA580C)'},
+  {shortName:'RKL', fullName:'Passary Minerals Private Limited', icon:'<img src="/icons/image.png" style="width:72px; height:72px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">', accent:'linear-gradient(135deg, #A78BFA, #8B5CF6)'},
+  {shortName:'PURAB', fullName:'Passary Minerals Purabh Private Limited', icon:'<img src="/icons/image.png" style="width:72px; height:72px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">', accent:'linear-gradient(135deg, #FCD34D, #F59E0B)'},
+  {shortName:'APPLICATION', fullName:'Refratech Application Services Private Limited', icon:'<img src="/icons/image.png" style="width:72px; height:72px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">', accent:'linear-gradient(135deg, #2DD4BF, #0D9488)'},
+  {shortName:'PASMIN', fullName:'Pasmin Engineering LLP', icon:'<img src="/icons/image.png" style="width:72px; height:72px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">', accent:'linear-gradient(135deg, #34D399, #10B981)'}
 ];
 function seedCompanies(){
   return COMPANY_SEED.map((s,i)=>({
@@ -75,7 +79,7 @@ function seedCompanies(){
 function defaultState(){
   return { activeCompanyId:null, companies:seedCompanies(), users:[
     {id:'u1', name:'Finance Team', role:'Admin', email:'admin@company.com'}
-  ], settings:{ gstnConnected:false, tracesConnected:false, autoReminders:true } };
+  ], settings:{ gstnConnected:false, tracesConnected:false, autoReminders:true, theme:'green' } };
 }
 async function loadState(){
   try{
@@ -131,7 +135,7 @@ const MONTH_NAMES = ['January','February','March','April','May','June','July','A
    ============================================================ */
 function render(){
   renderNav();
-  renderBadge();
+
   renderBreadcrumb();
   renderTopbarRight();
   const main = document.getElementById('main');
@@ -149,13 +153,28 @@ function render(){
   else if(view.screen==='team') renderAccountTeam(main);
   else if(view.screen==='approval') renderApprovalPayment(main);
   else if(view.screen==='loggedOut') renderLoggedOut(main);
+
+  createIcons({
+    icons: { LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut, ArrowLeft, Menu, Search, Calendar, Bell }
+  });
 }
 
 function renderTopbarRight(){
   const box = document.getElementById('topbarRight');
   const insideCompany = view.companyId && ['workspace','gstModules','tdsModules','detail'].includes(view.screen);
+  const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+  const searchAndDateHTML = `
+    <div class="top-search-bar">
+      <i data-lucide="search"></i>
+      <input type="text" placeholder="Search...">
+    </div>
+    <div class="top-date-display">
+      <i data-lucide="calendar"></i>
+      ${dateStr}
+    </div>
+  `;
   if(insideCompany){
-    box.innerHTML = `<button class="topbar-back-btn" id="topbarBackBtn"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</button>`;
+    box.innerHTML = `${searchAndDateHTML}<button class="topbar-back-btn" id="topbarBackBtn"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</button>`;
     document.getElementById('topbarBackBtn').onclick = ()=>{
       if(view.screen==='workspace'){ view={screen:'home',companyId:null,moduleId:null,category:null}; }
       else if(view.screen==='gstModules' || view.screen==='tdsModules'){ view={screen:'workspace', companyId:view.companyId, moduleId:null, category:null}; }
@@ -163,7 +182,7 @@ function renderTopbarRight(){
       render();
     };
   } else {
-    box.innerHTML = `<div class="user-chip" id="logoutChip" title="Click to logout"><div class="av">FT</div><span>Finance Team</span></div>`;
+    box.innerHTML = `${searchAndDateHTML}<div class="user-chip" id="logoutChip" title="Click to logout"><div class="av" style="background:var(--emerald);"><i data-lucide="log-out" style="width:16px;height:16px;"></i></div><span>Logout</span></div>`;
     document.getElementById('logoutChip').onclick = ()=>{ view={screen:'loggedOut'}; render(); };
   }
 }
@@ -181,6 +200,7 @@ function renderNav(){
     const div = document.createElement('div');
     div.className = 'snav-item'+(active?' active':'');
     div.innerHTML = `<span class="ic"><i data-lucide="${item.icon}"></i></span><span>${item.label}</span>`;
+    div.dataset.tooltip = item.label;
     div.onclick = ()=>{
       if(item.id==='home' || item.id==='dashboard' || item.id==='team' || item.id==='approval'){ view = {screen:item.id,companyId:null,moduleId:null,category:null}; }
       else if(item.id==='gstEntry' || item.id==='tdsEntry'){
@@ -194,65 +214,14 @@ function renderNav(){
   });
   nav.insertAdjacentHTML('beforeend', `
     <div class="snav-divider"></div>
-    <div class="snav-item" id="logoutNav"><span class="ic"><i data-lucide="log-out"></i></span><span>Logout</span></div>
+    <div class="snav-item" id="logoutNav" data-tooltip="Logout"><span class="ic"><i data-lucide="log-out"></i></span><span>Logout</span></div>
   `);
   document.getElementById('logoutNav').onclick = ()=>{ view={screen:'loggedOut'}; render(); };
-
-  createIcons({
-    icons: { LayoutDashboard, House, BarChart3, CalendarDays, Users, WalletCards, UserCog, Settings, LogOut, ArrowLeft, Menu }
-  });
-}
-
-function renderBadge(){
-  const box = document.getElementById('acBadge');
-  const c = state.activeCompanyId ? getCompany(state.activeCompanyId) : null;
-  if(!c){ box.innerHTML=''; return; }
-  box.innerHTML = `
-    <div class="lbl">Active Company</div>
-    <div class="acb-card" id="acbCard">
-      <div class="acb-avatar" style="background:${c.accent||'var(--blue-soft)'}; color:#fff; font-size:15px;">${c.icon||esc(c.shortName.slice(0,2))}</div>
-      <div class="t"><div class="n">${esc(c.fullName)}</div><div class="s">${esc(c.fy)}</div></div>
-    </div>`;
-  document.getElementById('acbCard').onclick = ()=>{ view={screen:'workspace', companyId:c.id, moduleId:null, category:null}; render(); };
 }
 
 function renderBreadcrumb(){
   const bc = document.getElementById('breadcrumb');
-  const parts = [];
-  parts.push(`<span class="seg home crumbtn" data-go="home">Home</span>`);
-  const sep = `<span class="sep">›</span>`;
-  if(view.companyId){
-    const c = getCompany(view.companyId);
-    const isCompanyPage = view.screen === 'workspace';
-    parts.push(`${sep}<span class="seg crumbtn ${isCompanyPage?'company-title':'current'}" data-go="workspace">${esc(c ? c.fullName : '')}</span>`);
-  }
-  if(view.screen==='gstModules' || (view.screen==='detail' && view.category==='gst')){
-    parts.push(`${sep}<span class="seg crumbtn current" data-go="gstModules">GST Working</span>`);
-  }
-  if(view.screen==='tdsModules' || (view.screen==='detail' && view.category==='tds')){
-    parts.push(`${sep}<span class="seg crumbtn current" data-go="tdsModules">TDS Working</span>`);
-  }
-  if(view.screen==='detail'){
-    const mods = view.category==='gst'?GST_MODULES:TDS_MODULES;
-    const m = mods.find(x=>x.id===view.moduleId);
-    parts.push(`${sep}<span class="current">${esc(m?m.name:'')}</span>`);
-  }
-  if(['reports','calendar','users','settings','dashboard','team','approval'].includes(view.screen)){
-    const labels = {reports:'Reports', calendar:'Compliance Calendar', users:'User Management', settings:'Settings', dashboard:'Dashboard', team:'Account Team', approval:'Approval Payment'};
-    parts.push(`${sep}<span class="current">${labels[view.screen]}</span>`);
-  }
-  if(view.screen==='loggedOut'){ parts.push(`${sep}<span class="current">Signed out</span>`); }
-  bc.innerHTML = parts.join('');
-  bc.querySelectorAll('[data-go]').forEach(el=>{
-    el.onclick = ()=>{
-      const go = el.dataset.go;
-      if(go==='home') view={screen:'home',companyId:null,moduleId:null,category:null};
-      if(go==='workspace') view={screen:'workspace',companyId:view.companyId,moduleId:null,category:null};
-      if(go==='gstModules') view={screen:'gstModules',companyId:view.companyId,moduleId:null,category:'gst'};
-      if(go==='tdsModules') view={screen:'tdsModules',companyId:view.companyId,moduleId:null,category:'tds'};
-      render();
-    };
-  });
+  bc.innerHTML = '';
 }
 
 /* ============================================================
@@ -262,12 +231,14 @@ function renderHome(main){
   let cards = '';
   state.companies.forEach(c=>{
     cards += `
-      <div class="co-card" data-cid="${c.id}" style="--accent:${c.accent||'linear-gradient(135deg, var(--blue), var(--purple))'}">
+      <div class="co-card" data-cid="${c.id}">
         <div class="co-card-body">
           <div class="co-top">
-            <div class="co-avatar">${c.icon||esc(c.shortName.slice(0,2))}</div>
+            <div style="display:flex; align-items:center; gap:0;">
+              <div>${c.icon||esc(c.shortName.slice(0,2))}</div>
+              <h3 style="margin:0 0 0 -10px; line-height:1; font-size:22px; color:#94A774;">${esc(c.shortName)}</h3>
+            </div>
           </div>
-          <h3>${esc(c.shortName)}</h3>
           <p class="full">${esc(c.fullName)}</p>
           <div class="co-meta">
             <div><div class="m-lbl">GSTIN</div><div class="m-val mono">${esc(c.gstin)||'—'}</div></div>
@@ -282,11 +253,13 @@ function renderHome(main){
         </div>
       </div>`;
   });
+  let greet = getGreeting();
   main.innerHTML = `
-    <div class="page-head">
-      <div class="eyebrow">Six-company workspace</div>
-      <h2>Good day, Finance Team</h2>
-      <p>Select a company to open its GST and TDS working.</p>
+    <div class="hero-banner">
+      <div class="hero-content">
+        <h1 class="hero-title">${greet} PASSARY ACCOUNT TEAM 👋</h1>
+        <p class="hero-subtitle">Select a company to open its GST and TDS working.</p>
+      </div>
     </div>
     <div class="company-grid">${cards}</div>
   `;
@@ -351,11 +324,10 @@ function openCompanyEditModal(cid){
 function renderWorkspace(main){
   const c = getCompany(view.companyId);
   main.innerHTML = `
-    <button class="back-btn" id="backBtn">← Back</button>
-    <div class="page-head">
-      <div class="eyebrow">${esc(c.shortName)} workspace</div>
-      <h2>${esc(c.fullName)}</h2>
-      <p>Choose GST Working or TDS Working to continue. <span id="editDetailsLink" style="color:var(--blue); font-weight:600; cursor:pointer;">Edit company details</span></p>
+    <div class="page-head" style="margin-bottom:24px;">
+      <div style="display:inline-block; background:var(--blue-soft, #eff6ff); color:var(--blue, #2563eb); font-size:11px; font-weight:700; padding:4px 10px; border-radius:12px; margin-bottom:12px; letter-spacing:0.5px;">${esc(c.shortName)} WORKSPACE</div>
+      <h2 style="font-size:28px; margin:0 0 8px 0; color:var(--ink);">${esc(c.fullName)}</h2>
+      <p style="margin:0; font-size:15px;">Choose GST Working or TDS Working to continue. <span id="editDetailsLink" style="color:var(--blue); font-weight:600; cursor:pointer;">Edit company details</span></p>
     </div>
     <div class="workspace-grid">
       <div class="big-module-card gst" id="goGst"><div class="glow"></div>
@@ -372,7 +344,6 @@ function renderWorkspace(main){
       </div>
     </div>
   `;
-  document.getElementById('backBtn').onclick = ()=>{ view={screen:'home',companyId:null,moduleId:null,category:null}; render(); };
   document.getElementById('editDetailsLink').onclick = ()=> openCompanyEditModal(c.id);
   document.getElementById('goGst').onclick = ()=>{ view={screen:'gstModules', companyId:c.id, moduleId:null, category:'gst'}; render(); };
   document.getElementById('goTds').onclick = ()=>{ view={screen:'tdsModules', companyId:c.id, moduleId:null, category:'tds'}; render(); };
@@ -407,15 +378,12 @@ function renderModuleGrid(main, category){
       </div>`;
   });
   main.innerHTML = `
-    <button class="back-btn" id="backBtn">← Back</button>
-    <div class="page-head">
-      <div class="eyebrow">${esc(c.shortName)} · ${category==='gst'?'GST Working':'TDS Working'}</div>
-      <h2>${category==='gst' ? 'GST Working Modules' : 'TDS Working Modules'}</h2>
-      <p>${category==='gst' ? '10 working areas covering returns, reconciliation and ITC.' : '8 section-wise TDS working areas.'}</p>
+    <div class="page-head" style="margin-bottom:20px;">
+      <h2 style="margin:0 0 8px 0;">${category==='gst' ? 'GST Working Modules' : 'TDS Working Modules'}</h2>
+      <p style="margin:0;">${category==='gst' ? '10 working areas covering returns, reconciliation and ITC.' : '8 section-wise TDS working areas.'}</p>
     </div>
     <div class="mod-grid">${cards}</div>
   `;
-  document.getElementById('backBtn').onclick = ()=>{ view={screen:'workspace', companyId:c.id, moduleId:null, category:null}; render(); };
   main.querySelectorAll('.mod-card').forEach(card=>{
     card.onclick = ()=>{ view = {screen:'detail', companyId:c.id, moduleId:card.dataset.mid, category}; render(); };
   });
@@ -432,15 +400,11 @@ function renderDetail(main, category){
   if(!ms.filters) ms.filters = { fy:'All', quarter:'All', month:'All', search:'', status:'All' };
 
   main.innerHTML = `
-    <button class="back-btn" id="backBtn">← Back</button>
-    <div class="page-head">
-      <div class="eyebrow">${esc(c.shortName)} · ${category==='gst'?'GST Working':'TDS Working'}</div>
-      <h2>${mod.icon} ${esc(mod.name)}</h2>
-      <p>${esc(mod.desc)}</p>
+    <div class="page-head" style="margin-bottom:20px;">
+      <p style="margin:0;">${esc(mod.desc)}</p>
     </div>
     <div id="detailBody"></div>
   `;
-  document.getElementById('backBtn').onclick = ()=>{ view={screen: category==='gst'?'gstModules':'tdsModules', companyId:c.id, moduleId:null, category}; render(); };
   if(mod.id==='notes') renderNotesModule(document.getElementById('detailBody'), c, ms, mod);
   else renderVoucherModule(document.getElementById('detailBody'), c, ms, mod, category);
 }
@@ -1004,11 +968,41 @@ if('serviceWorker' in navigator){
 /* ============================================================
    INIT
    ============================================================ */
+function getGreeting() {
+  const hr = new Date().getHours();
+  if(hr < 12) return 'Good Morning';
+  if(hr < 17) return 'Good Afternoon';
+  if(hr < 20) return 'Good Evening';
+  return 'Good Night';
+}
+
+
+
 (async function init(){
   document.getElementById('sidebarToggle').addEventListener('click', () => {
-    document.querySelector('.sidebar').classList.toggle('hidden');
+    const sb = document.querySelector('.sidebar');
+    sb.classList.toggle('collapsed');
+    state.settings.sidebarCollapsed = sb.classList.contains('collapsed');
+    saveState();
   });
   document.getElementById('main').innerHTML = '<div class="empty-state">Loading your workspace…</div>';
   await loadState();
+  if (state.settings.sidebarCollapsed) {
+    document.querySelector('.sidebar').classList.add('collapsed');
+  }
+  
+  state.settings.theme = 'orange';
+  document.documentElement.setAttribute('data-theme', 'orange');
+  
+  // Force HD colors and logo icon for existing local storage state
+  state.companies.forEach((c, i) => {
+    if (COMPANY_SEED[i]) {
+      c.accent = COMPANY_SEED[i].accent;
+      c.icon = COMPANY_SEED[i].icon;
+      c.shortName = COMPANY_SEED[i].shortName;
+    }
+  });
+  saveState();
+
   render();
 })();

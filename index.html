@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <title>Passary Refractories — GST &amp; TDS Management</title>
 <link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/icons/icon-192.png">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="icon" href="/icons/favicon.svg">
+<link rel="apple-touch-icon" href="/icons/favicon.svg">
 <meta name="theme-color" content="#2563EB">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,10 +17,15 @@
 <div id="app">
   <aside class="sidebar">
     <div class="logo-row">
-      <div><h1>Passary Refractories</h1><p>GST &amp; TDS Management</p></div>
+      <img src="/icons/logo.svg" onerror="this.style.display='none'" alt="" style="width:42px; height:42px; display:block; flex-shrink:0; transform:translateY(-2px);">
+      <div class="logo-text-wrapper">
+        <h1 style="display:flex; flex-direction:column; gap:2px; margin:0;">
+          <span style="color:#94A774; font-weight:800;">Passary</span>
+          <span style="color:var(--accent); font-weight:800;">Refractories</span>
+        </h1>
+      </div>
     </div>
     <div class="snav" id="mainNav"></div>
-    <div class="active-company-badge" id="acBadge"></div>
   </aside>
   <div class="content-area">
     <div class="topbar">
@@ -30,7 +35,14 @@
         </button>
         <div class="breadcrumb" id="breadcrumb"></div>
       </div>
-      <div class="topbar-right" id="topbarRight"></div>
+      <div class="topbar-right" id="topbarRight">
+        <div class="user-chip" id="logoutNav" onclick="window.location.hash='#loggedOut'">
+          <div class="av" style="background:var(--accent);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </div>
+          <span>Logout</span>
+        </div>
+      </div>
     </div>
     <main id="main"></main>
   </div>
