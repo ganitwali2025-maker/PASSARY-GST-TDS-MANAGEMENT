@@ -4,10 +4,15 @@
   "description": "Passary Refractories — GST & TDS Management (installable web app)",
   "main": "server.js",
   "scripts": {
-    "start": "node api/index.js",
-    "build": "echo 'No build step required'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node api/index.js"
   },
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "vite": "^8.1.4"
   }
 }
