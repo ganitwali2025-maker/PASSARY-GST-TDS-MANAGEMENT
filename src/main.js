@@ -255,12 +255,6 @@ function renderHome(main){
   });
   let greet = getGreeting();
   main.innerHTML = `
-    <div class="hero-banner">
-      <div class="hero-content">
-        <h1 class="hero-title">${greet} PASSARY ACCOUNT TEAM 👋</h1>
-        <p class="hero-subtitle">Select a company to open its GST and TDS working.</p>
-      </div>
-    </div>
     <div class="company-grid">${cards}</div>
   `;
   main.querySelectorAll('[data-access]').forEach(b=> b.onclick = ()=>openWorkspace(b.dataset.access));
