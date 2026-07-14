@@ -7,15 +7,17 @@ companies. Runs as a normal Node.js web app with its own backend, and can be
 ## Folder structure
 
 ```
-passary-taxsuite/
+Passary GST & TDS/
 ├── package.json        → dependencies + start script
-├── server.js            → Express backend (serves the app + storage API)
+├── vercel.json          → Vercel deployment configuration
+├── api/
+│   └── index.js         → Express backend (serves the app + storage API)
 ├── data/
-│   └── store.json        → all your saved data lives here (created automatically)
+│   └── store.json       → all your saved data lives here (for local dev)
 ├── public/
-│   ├── index.html         → the entire frontend app (UI + logic)
-│   ├── manifest.json       → makes the app installable (PWA)
-│   ├── sw.js                → service worker (offline app shell caching)
+│   ├── index.html       → the entire frontend app (UI + logic)
+│   ├── manifest.json    → makes the app installable (PWA)
+│   ├── sw.js            → service worker (offline app shell caching)
 │   └── icons/
 │       ├── icon-192.png
 │       └── icon-512.png
@@ -89,7 +91,7 @@ or use a process manager so it restarts automatically:
 
 ```bash
 npm install -g pm2
-pm2 start server.js --name passary-taxsuite
+pm2 start api/index.js --name passary-taxsuite
 pm2 save
 ```
 
