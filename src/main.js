@@ -251,11 +251,9 @@ function renderHome(main){
   state.companies.forEach(c=>{
     cards += `
       <div class="co-card" data-cid="${c.id}" style="--accent:${c.accent||'linear-gradient(135deg, var(--blue), var(--purple))'}">
-        <div class="co-glow"></div>
         <div class="co-card-body">
           <div class="co-top">
             <div class="co-avatar">${c.icon||esc(c.shortName.slice(0,2))}</div>
-            <span class="status-pill ${c.status==='Active'?'active':'inactive'}">${esc(c.status)}</span>
           </div>
           <h3>${esc(c.shortName)}</h3>
           <p class="full">${esc(c.fullName)}</p>
@@ -983,6 +981,9 @@ if('serviceWorker' in navigator){
    INIT
    ============================================================ */
 (async function init(){
+  document.getElementById('sidebarToggle').addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.toggle('hidden');
+  });
   document.getElementById('main').innerHTML = '<div class="empty-state">Loading your workspace…</div>';
   await loadState();
   render();

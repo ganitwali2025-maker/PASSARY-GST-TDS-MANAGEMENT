@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#2563EB">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="/src/style.css">
 </head>
@@ -24,7 +24,10 @@
   </aside>
   <div class="content-area">
     <div class="topbar">
-      <div class="breadcrumb" id="breadcrumb"></div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <button id="sidebarToggle" style="background:none; border:none; cursor:pointer; font-size:22px; color:var(--ink); padding:0; display:flex; align-items:center; justify-content:center;" title="Toggle Sidebar">☰</button>
+        <div class="breadcrumb" id="breadcrumb"></div>
+      </div>
       <div class="topbar-right" id="topbarRight"></div>
     </div>
     <main id="main"></main>
