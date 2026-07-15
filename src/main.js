@@ -358,23 +358,220 @@ function openCompanyEditModal(cid){
 function renderWorkspace(main){
   const c = getCompany(view.companyId);
   main.innerHTML = `
-    <div class="page-head" style="margin-bottom:24px;">
-      <div style="display:inline-block; background:var(--blue-soft, #eff6ff); color:var(--blue, #2563eb); font-size:11px; font-weight:700; padding:4px 10px; border-radius:12px; margin-bottom:12px; letter-spacing:0.5px;">${esc(c.shortName)} WORKSPACE</div>
-      <h2 style="font-size:28px; margin:0 0 8px 0; color:var(--ink);">${esc(c.fullName)}</h2>
-      <p style="margin:0; font-size:15px;">Choose GST Working or TDS Working to continue. <span id="editDetailsLink" style="color:var(--blue); font-weight:600; cursor:pointer;">Edit company details</span></p>
-    </div>
-    <div class="workspace-grid">
-      <div class="big-module-card gst" id="goGst"><div class="glow"></div>
-        <span class="ic">🧾</span>
-        <h3>GST Working</h3>
-        <p>Returns, reconciliations, ITC registers and RCM working for ${esc(c.shortName)}.</p>
-        <span class="go">Open GST modules →</span>
+    <div class="prem-ws-container">
+      
+      <div class="prem-header-row">
+        <div>
+          <h2 class="prem-title">${esc(c.fullName)}</h2>
+          <p class="prem-subtitle">Choose GST Working or TDS Working to continue. <span id="editDetailsLink" class="prem-link">Edit company details</span></p>
+        </div>
+        
+        <div class="prem-filters">
+          <div class="prem-filter-box">
+            <span class="prem-filter-label">FINANCIAL YEAR</span>
+            <select class="prem-filter-select">
+              <option>2026-27</option>
+              <option>2025-26</option>
+            </select>
+            <svg class="prem-filter-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="prem-filter-box">
+            <span class="prem-filter-label">QUARTER</span>
+            <select class="prem-filter-select">
+              <option>Q1 (Apr - Jun 2026)</option>
+              <option>All</option>
+              <option>Q2 (Jul - Sep)</option>
+              <option>Q3 (Oct - Dec)</option>
+              <option>Q4 (Jan - Mar)</option>
+            </select>
+            <svg class="prem-filter-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="prem-filter-box">
+            <span class="prem-filter-label">MONTH</span>
+            <select class="prem-filter-select">
+              <option>April 2026</option>
+              <option>All</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+            </select>
+            <svg class="prem-filter-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+        </div>
       </div>
-      <div class="big-module-card tds" id="goTds"><div class="glow"></div>
-        <span class="ic">📑</span>
-        <h3>TDS Working</h3>
-        <p>Section-wise TDS vouchers, challans and return tracking for ${esc(c.shortName)}.</p>
-        <span class="go">Open TDS modules →</span>
+
+      <div class="prem-grid">
+        <div class="prem-left-col">
+          
+          <div class="prem-cards-row">
+            <div class="prem-module-card prem-card-orange" id="goGst">
+              <div class="prem-icon-wrapper prem-icon-orange">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <h3>GST Working</h3>
+              <p>Returns, reconciliations, ITC registers and RCM working for ${esc(c.shortName)}.</p>
+              <button class="prem-btn prem-btn-orange">Open GST modules →</button>
+              <svg class="prem-illustration" style="color:#FF7A00;" viewBox="0 0 200 200" fill="none"><rect x="40" y="30" width="120" height="150" rx="12" fill="currentColor" opacity="0.1"/><path d="M70 70h60M70 100h60M70 130h40" stroke="currentColor" stroke-width="8" stroke-linecap="round" opacity="0.2"/></svg>
+            </div>
+            
+            <div class="prem-module-card prem-card-purple" id="goTds">
+              <div class="prem-icon-wrapper prem-icon-purple">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <h3>TDS Working</h3>
+              <p>Section-wise TDS vouchers, challans and return tracking for ${esc(c.shortName)}.</p>
+              <button class="prem-btn prem-btn-purple">Open TDS modules →</button>
+              <svg class="prem-illustration" style="color:#7C4DFF;" viewBox="0 0 200 200" fill="none"><rect x="40" y="30" width="120" height="150" rx="12" fill="currentColor" opacity="0.1"/><circle cx="100" cy="120" r="30" stroke="currentColor" stroke-width="8" opacity="0.2"/><path d="M90 120h20M100 110v20" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity="0.2"/></svg>
+            </div>
+          </div>
+          
+          <div class="prem-table-card">
+            <div class="prem-table-head">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              Notifications
+            </div>
+            <table class="prem-table">
+              <thead>
+                <tr>
+                  <th>Activity</th>
+                  <th>Category</th>
+                  <th>Period</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>GSTR-1 for April 2026 is pending.</td>
+                  <td><span class="prem-cat gst">GST</span></td>
+                  <td>Apr 2026</td>
+                  <td style="color:#EF4444; font-weight:600;">11 May 2026</td>
+                  <td><span class="prem-status pending">Pending</span></td>
+                  <td>10:30 AM</td>
+                </tr>
+                <tr>
+                  <td>TDS Challan for Q4 FY 2025-26 is pending.</td>
+                  <td><span class="prem-cat tds">TDS</span></td>
+                  <td>Q4 FY 25-26</td>
+                  <td style="color:#EF4444; font-weight:600;">7 May 2026</td>
+                  <td><span class="prem-status pending">Pending</span></td>
+                  <td>Yesterday</td>
+                </tr>
+                <tr>
+                  <td>GSTR-3B for March 2026 filed successfully.</td>
+                  <td><span class="prem-cat gst">GST</span></td>
+                  <td>Mar 2026</td>
+                  <td>20 Apr 2026</td>
+                  <td><span class="prem-status completed">Completed</span></td>
+                  <td>30 Apr 2026</td>
+                </tr>
+                <tr>
+                  <td>ITC Reconciliation for March 2026 is not completed.</td>
+                  <td><span class="prem-cat gst">GST</span></td>
+                  <td>Mar 2026</td>
+                  <td style="color:#EF4444; font-weight:600;">30 Apr 2026</td>
+                  <td><span class="prem-status pending">Pending</span></td>
+                  <td>29 Apr 2026</td>
+                </tr>
+                <tr>
+                  <td>RCM entries for March 2026 are pending.</td>
+                  <td><span class="prem-cat gst">GST</span></td>
+                  <td>Mar 2026</td>
+                  <td style="color:#EF4444; font-weight:600;">30 Apr 2026</td>
+                  <td><span class="prem-status pending">Pending</span></td>
+                  <td>28 Apr 2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        
+        <div class="prem-alerts-card">
+          <div class="prem-alerts-header">
+            <div class="prem-alerts-title">Alerts</div>
+            <a href="#" class="prem-link" style="font-size:13px;">View all alerts</a>
+          </div>
+          <div class="prem-alert-list">
+            
+            <div class="prem-alert-item">
+              <div class="prem-alert-icon red">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div class="prem-alert-content">
+                <p class="prem-alert-text">GSTR-1 for April 2026 is pending.</p>
+                <span class="prem-alert-date">Due date: 11 May 2026</span>
+              </div>
+              <div class="prem-alert-meta">
+                <span class="prem-alert-time">10:30 AM</span>
+                <div class="prem-alert-dot"></div>
+              </div>
+            </div>
+
+            <div class="prem-alert-item">
+              <div class="prem-alert-icon purple">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <div class="prem-alert-content">
+                <p class="prem-alert-text">TDS Challan for Q4 FY 2025-26 is pending.</p>
+                <span class="prem-alert-date">Due date: 7 May 2026</span>
+              </div>
+              <div class="prem-alert-meta">
+                <span class="prem-alert-time">Yesterday</span>
+                <div class="prem-alert-dot"></div>
+              </div>
+            </div>
+
+            <div class="prem-alert-item">
+              <div class="prem-alert-icon orange">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+              </div>
+              <div class="prem-alert-content">
+                <p class="prem-alert-text">RCM entries for March 2026 are pending.</p>
+              </div>
+              <div class="prem-alert-meta">
+                <span class="prem-alert-time">28 Apr 2026</span>
+                <div class="prem-alert-dot"></div>
+              </div>
+            </div>
+
+            <div class="prem-alert-item">
+              <div class="prem-alert-icon blue">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </div>
+              <div class="prem-alert-content">
+                <p class="prem-alert-text">ITC Reconciliation for March 2026 is not completed.</p>
+              </div>
+              <div class="prem-alert-meta">
+                <span class="prem-alert-time">29 Apr 2026</span>
+                <div class="prem-alert-dot"></div>
+              </div>
+            </div>
+
+            <div class="prem-alert-item">
+              <div class="prem-alert-icon green">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="prem-alert-content">
+                <p class="prem-alert-text">GSTR-3B for March 2026 filed successfully.</p>
+              </div>
+              <div class="prem-alert-meta">
+                <span class="prem-alert-time">30 Apr 2026</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
       </div>
     </div>
   `;

@@ -100,7 +100,7 @@ button,select,input{font-family:inherit;}
   width: 0;
   opacity: 0;
 }
-.snav{display:flex; flex-direction:column; gap:4px; margin-top:24px;}
+.snav{display:flex; flex-direction:column; gap:4px; margin-top:10px;}
 .snav-item{
   display:flex; align-items:center; gap:12px; padding:0 14px; border-radius:16px;
   cursor:pointer; font-size:15px; font-weight:600; color:var(--muted); transition: all 0.2s ease;
@@ -532,3 +532,373 @@ tbody tr:hover{background:#fafbff;}
 @keyframes slideOutToast {
   to { transform: translateY(20px); opacity: 0; }
 }
+
+/* ---------------- PREMIUM WORKSPACE DASHBOARD ---------------- */
+.prem-ws-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.prem-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.prem-badge {
+  display: inline-block;
+  background: #FFF0E5;
+  color: #FF7A00;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.prem-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+  font-family: 'Lora', serif;
+}
+
+.prem-subtitle {
+  font-size: 15px;
+  color: #6B7280;
+  margin: 0;
+}
+
+.prem-link {
+  color: #FF7A00;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.prem-link:hover { color: #E66A00; text-decoration: underline; }
+
+.prem-filters {
+  display: flex;
+  gap: 16px;
+}
+
+.prem-filter-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  position: relative;
+}
+.prem-filter-box:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
+}
+
+.prem-filter-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94A3B8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.prem-filter-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1E293B;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+.prem-filter-icon {
+  position: absolute;
+  right: 14px;
+  bottom: 10px;
+  pointer-events: none;
+  color: #64748B;
+}
+
+.prem-grid {
+  display: grid;
+  grid-template-columns: 2.5fr 1.5fr;
+  gap: 24px;
+}
+
+.prem-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.prem-cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.prem-module-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 22px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  min-height: 240px;
+}
+.prem-module-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.prem-card-orange:hover { border-color: rgba(255, 122, 0, 0.4); }
+.prem-card-purple:hover { border-color: rgba(124, 77, 255, 0.4); }
+
+.prem-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.prem-icon-orange { background: #FFF0E5; color: #FF7A00; }
+.prem-icon-purple { background: #F3E8FF; color: #7C4DFF; }
+
+.prem-module-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px 0;
+}
+.prem-module-card p {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+  max-width: 75%;
+}
+
+.prem-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  background: transparent;
+  transition: all 0.2s;
+}
+.prem-btn-orange { border: 1px solid rgba(255, 122, 0, 0.3); color: #FF7A00; }
+.prem-btn-orange:hover { background: #FFF0E5; }
+.prem-btn-purple { border: 1px solid rgba(124, 77, 255, 0.3); color: #7C4DFF; }
+.prem-btn-purple:hover { background: #F3E8FF; }
+
+.prem-illustration {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 160px;
+  opacity: 0.9;
+  pointer-events: none;
+  transition: transform 0.4s ease;
+}
+.prem-module-card:hover .prem-illustration {
+  transform: scale(1.05) translate(-5px, -5px) rotate(-3deg);
+}
+
+.prem-table-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  padding: 28px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.prem-table-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.prem-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.prem-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #111827;
+  padding: 12px 16px;
+  border-bottom: 1px solid #F1F5F9;
+}
+.prem-table td {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #475569;
+  border-bottom: 1px solid #F1F5F9;
+  transition: background 0.2s;
+}
+.prem-table tbody tr:hover td {
+  background: #F8FAFC;
+}
+.prem-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prem-status {
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+}
+.prem-status.completed { background: #DCFCE7; color: #166534; }
+.prem-status.pending { background: #FFF7ED; color: #C2410C; }
+.prem-status.overdue { background: #FEE2E2; color: #991B1B; }
+
+.prem-cat {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.prem-cat.gst { background: #FFF0E5; color: #FF7A00; }
+.prem-cat.tds { background: #F3E8FF; color: #7C4DFF; }
+
+.prem-alerts-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  padding: 28px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.prem-alerts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.prem-alerts-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prem-alert-count {
+  background: #EF4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prem-alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.prem-alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+.prem-alert-item:last-child { border-bottom: none; }
+
+.prem-alert-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.prem-alert-icon.red { background: #FEE2E2; color: #EF4444; }
+.prem-alert-icon.orange { background: #FFF7ED; color: #F97316; }
+.prem-alert-icon.purple { background: #F3E8FF; color: #A855F7; }
+.prem-alert-icon.green { background: #DCFCE7; color: #22C55E; }
+.prem-alert-icon.blue { background: #DBEAFE; color: #3B82F6; }
+
+.prem-alert-content {
+  flex: 1;
+}
+.prem-alert-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+}
+.prem-alert-date {
+  font-size: 11px;
+  color: #94A3B8;
+}
+.prem-alert-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.prem-alert-time {
+  font-size: 11px;
+  color: #94A3B8;
+  font-weight: 500;
+}
+.prem-alert-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #EF4444;
+}
+
+.prem-view-all {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FF7A00;
+  margin-top: 24px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.prem-view-all:hover { opacity: 0.8; }
