@@ -42,6 +42,26 @@ const NAV_ITEMS = [
 let state = null;
 let view = { screen:'home', companyId:null, moduleId:null, category:null };
 
+function syncViewFromHash() {
+  const hash = window.location.hash.slice(1) || '/home';
+  const [path, qs] = hash.split('?');
+  const screen = path.replace('/', '') || 'home';
+  const params = new URLSearchParams(qs || '');
+  view = {
+    screen: screen,
+    companyId: params.get('c') || null,
+    category: params.get('cat') || null,
+    moduleId: params.get('m') || null
+  };
+  if (view.companyId && state) {
+    state.activeCompanyId = view.companyId;
+  }
+}
+window.addEventListener('popstate', () => {
+  syncViewFromHash();
+  render();
+});
+
 const MODULE_ACCENTS = {
   blue: 'var(--accent)', emerald: 'var(--accent)', purple: 'var(--accent)', teal: 'var(--accent)', orange: 'var(--accent)'
 };
@@ -134,6 +154,22 @@ const MONTH_NAMES = ['January','February','March','April','May','June','July','A
    RENDER: SHELL
    ============================================================ */
 function render(){
+  let hash = '#/' + view.screen;
+  const params = new URLSearchParams();
+  if(view.companyId) params.set('c', view.companyId);
+  if(view.category) params.set('cat', view.category);
+  if(view.moduleId) params.set('m', view.moduleId);
+  const qs = params.toString();
+  if(qs) hash += '?' + qs;
+  
+  if (window.location.hash !== hash) {
+    if (!window.location.hash && hash === '#/home') {
+       history.replaceState(null, '', hash);
+    } else {
+       history.pushState(null, '', hash);
+    }
+  }
+
   renderNav();
 
   renderBreadcrumb();
@@ -190,6 +226,7 @@ function renderTopbarRight(){
 function renderNav(){
   const nav = document.getElementById('mainNav');
   nav.innerHTML = '';
+  let toggleColor = true;
   NAV_ITEMS.forEach(item=>{
     const active = (item.id==='home' && view.screen==='home') ||
       (item.id==='gstEntry' && ['workspace','gstModules'].includes(view.screen)===false && view.screen==='detail' && view.category==='gst') ||
@@ -198,7 +235,7 @@ function renderNav(){
       (item.id==='tdsEntry' && view.screen==='detail' && view.category==='tds') ||
       (item.id===view.screen);
     const div = document.createElement('div');
-    div.className = 'snav-item'+(active?' active':'');
+    div.className = 'snav-item' + (active?' active':'');
     div.innerHTML = `<span class="ic"><i data-lucide="${item.icon}"></i></span><span>${item.label}</span>`;
     div.dataset.tooltip = item.label;
     div.onclick = ()=>{
@@ -1003,5 +1040,6 @@ function getGreeting() {
   });
   saveState();
 
+  syncViewFromHash();
   render();
 })();
