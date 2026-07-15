@@ -100,7 +100,7 @@ button,select,input{font-family:inherit;}
   width: 0;
   opacity: 0;
 }
-.snav{display:flex; flex-direction:column; gap:4px;}
+.snav{display:flex; flex-direction:column; gap:4px; margin-top:24px;}
 .snav-item{
   display:flex; align-items:center; gap:12px; padding:0 14px; border-radius:16px;
   cursor:pointer; font-size:15px; font-weight:600; color:var(--muted); transition: all 0.2s ease;
