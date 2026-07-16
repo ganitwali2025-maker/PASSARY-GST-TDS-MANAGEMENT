@@ -199,10 +199,15 @@ function renderTopbarRight(){
   const box = document.getElementById('topbarRight');
   const insideCompany = view.companyId && ['workspace','gstModules','tdsModules','detail'].includes(view.screen);
   const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+  const d = new Date();
+  const y = d.getFullYear(), m = d.getMonth() + 1;
+  const startY = m >= 4 ? y : y - 1;
+  const fyStr = startY + '-' + String((startY + 1) % 100).padStart(2, '0');
+
   const searchAndDateHTML = `
-    <div class="top-search-bar">
-      <i data-lucide="search"></i>
-      <input type="text" placeholder="Search...">
+    <div class="top-date-display">
+      <i data-lucide="calendar"></i>
+      FY ${fyStr}
     </div>
     <div class="top-date-display">
       <i data-lucide="calendar"></i>
@@ -402,6 +407,16 @@ function renderWorkspace(main){
               <option>January</option>
               <option>February</option>
               <option>March</option>
+            </select>
+            <svg class="prem-filter-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="prem-filter-box">
+            <span class="prem-filter-label">STATUS</span>
+            <select class="prem-filter-select">
+              <option>All Status</option>
+              <option>Pending</option>
+              <option>Filed</option>
+              <option>Overdue</option>
             </select>
             <svg class="prem-filter-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </div>
