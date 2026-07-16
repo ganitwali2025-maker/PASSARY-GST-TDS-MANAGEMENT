@@ -6,15 +6,15 @@ import { createIcons, LayoutDashboard, House, BarChart3, CalendarDays, Users, Wa
 const STORAGE_KEY = 'passary-refractories-tax-state-v2';
 
 const GST_MODULES = [
- {id:'gstr1', name:'GSTR-1 Working', desc:'Outward supply return preparation, invoice-level working.', icon:'📤', color:'blue'},
- {id:'gstr3b', name:'GSTR-3B Working', desc:'Summary return: tax liability and ITC set-off working.', icon:'📥', color:'emerald'},
- {id:'recon2b', name:'Books vs GSTR-2B Reconciliation', desc:'Match purchase register against downloaded 2B data.', icon:'🔄', color:'purple'},
- {id:'current2b', name:'Current Month GSTR-2B', desc:'The current period auto-drafted ITC statement.', icon:'📅', color:'teal'},
- {id:'all2b', name:'All Months GSTR-2B Repository', desc:'Archive of every downloaded 2B statement.', icon:'🗄️', color:'orange'},
- {id:'unclaimedItc', name:'Unclaimed ITC Register', desc:'Eligible credit not yet claimed in returns.', icon:'📌', color:'blue'},
- {id:'oldItc', name:'Old ITC Register', desc:'Legacy credit carried forward from earlier periods.', icon:'📦', color:'purple'},
- {id:'rcm', name:'Reverse Charge Mechanism (RCM)', desc:'Tax payable by recipient under reverse charge.', icon:'🔁', color:'emerald'},
  {id:'finalItc', name:'Final ITC Claim Dashboard', desc:'Consolidated credit approved for claim.', icon:'✅', color:'teal'},
+ {id:'gstr3b', name:'GSTR-3B Working', desc:'Summary return: tax liability and ITC set-off working.', icon:'📥', color:'emerald'},
+ {id:'oldItc', name:'Old ITC Register', desc:'Legacy credit carried forward from earlier periods.', icon:'📦', color:'purple'},
+ {id:'all2b', name:'All Months GSTR-2B Repository', desc:'Archive of every downloaded 2B statement.', icon:'🗄️', color:'orange'},
+ {id:'current2b', name:'Current Month GSTR-2B', desc:'The current period auto-drafted ITC statement.', icon:'📅', color:'teal'},
+ {id:'recon2b', name:'Books vs GSTR-2B Reconciliation', desc:'Match purchase register against downloaded 2B data.', icon:'🔄', color:'purple'},
+ {id:'rcm', name:'Reverse Charge Mechanism (RCM)', desc:'Tax payable by recipient under reverse charge.', icon:'🔁', color:'emerald'},
+ {id:'gstr1', name:'GSTR-1 Working', desc:'Outward supply return preparation, invoice-level working.', icon:'📤', color:'blue'},
+ {id:'unclaimedItc', name:'Unclaimed ITC Register', desc:'Eligible credit not yet claimed in returns.', icon:'📌', color:'blue'},
  {id:'notes', name:'GST Notes / Working Papers', desc:'Free-form notes and supporting workings.', icon:'📝', color:'orange'}
 ];
 const TDS_MODULES = [
@@ -418,7 +418,7 @@ function renderWorkspace(main){
               </div>
               <h3>GST Working</h3>
               <p>Returns, reconciliations, ITC registers and RCM working for ${esc(c.shortName)}.</p>
-              <button class="prem-btn prem-btn-orange">Open GST modules →</button>
+              <button class="prem-btn prem-btn-orange">Open GST modules for ${esc(c.shortName)} →</button>
               <svg class="prem-illustration" style="color:#FF7A00;" viewBox="0 0 200 200" fill="none"><rect x="40" y="30" width="120" height="150" rx="12" fill="currentColor" opacity="0.1"/><path d="M70 70h60M70 100h60M70 130h40" stroke="currentColor" stroke-width="8" stroke-linecap="round" opacity="0.2"/></svg>
             </div>
             
@@ -428,7 +428,7 @@ function renderWorkspace(main){
               </div>
               <h3>TDS Working</h3>
               <p>Section-wise TDS vouchers, challans and return tracking for ${esc(c.shortName)}.</p>
-              <button class="prem-btn prem-btn-purple">Open TDS modules →</button>
+              <button class="prem-btn prem-btn-purple">Open TDS modules for ${esc(c.shortName)} →</button>
               <svg class="prem-illustration" style="color:#7C4DFF;" viewBox="0 0 200 200" fill="none"><rect x="40" y="30" width="120" height="150" rx="12" fill="currentColor" opacity="0.1"/><circle cx="100" cy="120" r="30" stroke="currentColor" stroke-width="8" opacity="0.2"/><path d="M90 120h20M100 110v20" stroke="currentColor" stroke-width="6" stroke-linecap="round" opacity="0.2"/></svg>
             </div>
           </div>
@@ -474,22 +474,7 @@ function renderWorkspace(main){
                   <td><span class="prem-status completed">Completed</span></td>
                   <td>30 Apr 2026</td>
                 </tr>
-                <tr>
-                  <td>ITC Reconciliation for March 2026 is not completed.</td>
-                  <td><span class="prem-cat gst">GST</span></td>
-                  <td>Mar 2026</td>
-                  <td style="color:#EF4444; font-weight:600;">30 Apr 2026</td>
-                  <td><span class="prem-status pending">Pending</span></td>
-                  <td>29 Apr 2026</td>
-                </tr>
-                <tr>
-                  <td>RCM entries for March 2026 are pending.</td>
-                  <td><span class="prem-cat gst">GST</span></td>
-                  <td>Mar 2026</td>
-                  <td style="color:#EF4444; font-weight:600;">30 Apr 2026</td>
-                  <td><span class="prem-status pending">Pending</span></td>
-                  <td>28 Apr 2026</td>
-                </tr>
+
               </tbody>
             </table>
           </div>
@@ -527,32 +512,6 @@ function renderWorkspace(main){
               </div>
               <div class="prem-alert-meta">
                 <span class="prem-alert-time">Yesterday</span>
-                <div class="prem-alert-dot"></div>
-              </div>
-            </div>
-
-            <div class="prem-alert-item">
-              <div class="prem-alert-icon orange">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-              </div>
-              <div class="prem-alert-content">
-                <p class="prem-alert-text">RCM entries for March 2026 are pending.</p>
-              </div>
-              <div class="prem-alert-meta">
-                <span class="prem-alert-time">28 Apr 2026</span>
-                <div class="prem-alert-dot"></div>
-              </div>
-            </div>
-
-            <div class="prem-alert-item">
-              <div class="prem-alert-icon blue">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-              </div>
-              <div class="prem-alert-content">
-                <p class="prem-alert-text">ITC Reconciliation for March 2026 is not completed.</p>
-              </div>
-              <div class="prem-alert-meta">
-                <span class="prem-alert-time">29 Apr 2026</span>
                 <div class="prem-alert-dot"></div>
               </div>
             </div>
@@ -749,20 +708,80 @@ function renderVoucherModule(container, c, ms, mod, category){
 
   let tableHtml;
   if(category==='gst'){
-    tableHtml = rows.length ? `
-      <table>
-        <thead><tr><th>Date</th><th>Invoice</th><th>Party</th><th>GSTIN</th><th>Taxable</th><th>Rate</th><th>CGST</th><th>SGST</th><th>IGST</th><th>Total</th><th>ITC Eligible</th><th>Status</th><th></th></tr></thead>
-        <tbody>${rows.map(r=>`
-          <tr>
-            <td>${esc(r.date)||'—'}</td><td>${esc(r.invoice)||'—'}</td><td>${esc(r.party)||'—'}</td><td class="mono">${esc(r.gstin)||'—'}</td>
-            <td class="num-cell mono">${fmt(r.taxable)}</td><td class="num-cell">${r.rate}%</td>
-            <td class="num-cell mono">${fmt(r.cgst)}</td><td class="num-cell mono">${fmt(r.sgst)}</td><td class="num-cell mono">${fmt(r.igst)}</td>
-            <td class="num-cell mono">${fmt(r.total)}</td><td>${esc(r.itcEligible)}</td>
-            <td><span class="pill ${r.status==='Filed'?'done':r.status==='In Review'?'review':'pending'}">${esc(r.status)}</span></td>
-            <td><button class="del-btn" data-del="${r.id}">✕</button></td>
-          </tr>`).join('')}
-        </tbody>
-      </table>` : `<div class="empty-state"><div class="em-ic">📭</div>No entries match the current filters.</div>`;
+    if (mod.id === 'gstr1') {
+      tableHtml = rows.length ? `
+        <style>
+          .gstr1-table th {
+            background-color: #4CB1B4; 
+            color: #FFFFFF; 
+            border: 1px solid rgba(255,255,255,0.4); 
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px;
+            white-space: nowrap;
+          }
+          .gstr1-table td { text-align: center; }
+          .gstr1-table td:nth-child(3) { text-align: left; }
+        </style>
+        <table class="gstr1-table" style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="border-bottom: 1px solid rgba(255,255,255,0.4);">Apr-1</th>
+              <th rowspan="2" style="vertical-align:middle;">Invoice Date</th>
+              <th style="border-bottom: 1px solid rgba(255,255,255,0.4); text-align: left;">3,465,853.17</th>
+              <th rowspan="2" style="vertical-align:middle;">Supplier GSTIN</th>
+              <th rowspan="2" style="vertical-align:middle;">Invoice NO.</th>
+              <th style="border-bottom: 1px solid rgba(255,255,255,0.4);">${fmt(totals.taxable)}</th>
+              <th style="border-bottom: 1px solid rgba(255,255,255,0.4);">${fmt(totals.igst)}</th>
+              <th style="border-bottom: 1px solid rgba(255,255,255,0.4);">${fmt(totals.cgst)}</th>
+              <th style="border-bottom: 1px solid rgba(255,255,255,0.4);">${fmt(totals.sgst)}</th>
+              <th style="border-bottom: 1px solid rgba(255,255,255,0.4);">${fmt(totals.total)}</th>
+              <th rowspan="2" style="background-color:transparent; border:none;"></th>
+            </tr>
+            <tr>
+              <th>Doc. typ</th>
+              <th>Supplier Name</th>
+              <th>Taxable Amount</th>
+              <th>IGST Amount</th>
+              <th>CGST Amount</th>
+              <th>SGST Amount</th>
+              <th>TOTAL TAX</th>
+            </tr>
+          </thead>
+          <tbody>${rows.map(r=>`
+            <tr>
+              <td>Invoice</td>
+              <td>${esc(r.date)||'—'}</td>
+              <td style="text-align:left;">${esc(r.party)||'—'}</td>
+              <td class="mono">${esc(r.gstin)||'—'}</td>
+              <td>${esc(r.invoice)||'—'}</td>
+              <td class="num-cell mono">${fmt(r.taxable)}</td>
+              <td class="num-cell mono">${fmt(r.igst)}</td>
+              <td class="num-cell mono">${fmt(r.cgst)}</td>
+              <td class="num-cell mono">${fmt(r.sgst)}</td>
+              <td class="num-cell mono">${fmt(r.total)}</td>
+              <td><button class="del-btn" data-del="${r.id}">✕</button></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>` : `<div class="empty-state"><div class="em-ic">📭</div>No entries match the current filters.</div>`;
+    } else {
+      tableHtml = rows.length ? `
+        <table>
+          <thead><tr><th>Date</th><th>Invoice</th><th>Party</th><th>GSTIN</th><th>Taxable</th><th>Rate</th><th>CGST</th><th>SGST</th><th>IGST</th><th>Total</th><th>ITC Eligible</th><th>Status</th><th></th></tr></thead>
+          <tbody>${rows.map(r=>`
+            <tr>
+              <td>${esc(r.date)||'—'}</td><td>${esc(r.invoice)||'—'}</td><td>${esc(r.party)||'—'}</td><td class="mono">${esc(r.gstin)||'—'}</td>
+              <td class="num-cell mono">${fmt(r.taxable)}</td><td class="num-cell">${r.rate}%</td>
+              <td class="num-cell mono">${fmt(r.cgst)}</td><td class="num-cell mono">${fmt(r.sgst)}</td><td class="num-cell mono">${fmt(r.igst)}</td>
+              <td class="num-cell mono">${fmt(r.total)}</td><td>${esc(r.itcEligible)}</td>
+              <td><span class="pill ${r.status==='Filed'?'done':r.status==='In Review'?'review':'pending'}">${esc(r.status)}</span></td>
+              <td><button class="del-btn" data-del="${r.id}">✕</button></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>` : `<div class="empty-state"><div class="em-ic">📭</div>No entries match the current filters.</div>`;
+    }
+
   } else {
     tableHtml = rows.length ? `
       <table>

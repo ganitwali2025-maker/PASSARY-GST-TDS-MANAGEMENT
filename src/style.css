@@ -307,8 +307,7 @@ main{flex:1; padding:28px 32px 64px;}
   box-shadow:var(--shadow-sm); transition:transform .18s;
 }
 .big-module-card:hover{transform:translateY(-5px); border-color:#cbd5e1; box-shadow:var(--shadow-lg);}
-.big-module-card.gst{}
-.big-module-card.tds{}
+
 .big-module-card .glow{display:none;}
 .big-module-card .ic{font-size:36px; margin-bottom:18px; display:block; color:var(--accent);}
 .big-module-card h3{font-size:22px; margin:0 0 8px; font-weight:700; color:var(--ink);}
@@ -718,15 +717,15 @@ tbody tr:hover{background:#fafbff;}
 
 .prem-illustration {
   position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 160px;
+  right: 10px;
+  bottom: 10px;
+  width: 130px;
   opacity: 0.9;
   pointer-events: none;
   transition: transform 0.4s ease;
 }
 .prem-module-card:hover .prem-illustration {
-  transform: scale(1.05) translate(-5px, -5px) rotate(-3deg);
+  transform: scale(1.05) translate(-2px, -2px) rotate(-3deg);
 }
 
 .prem-table-card {
