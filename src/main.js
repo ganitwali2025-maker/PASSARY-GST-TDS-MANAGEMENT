@@ -170,6 +170,17 @@ function render(){
     }
   }
 
+  // Dynamic Topbar Title
+  const topbarTitle = document.getElementById('topbarTitle');
+  if (topbarTitle) {
+    if (view.companyId && ['workspace','gstModules','tdsModules','detail'].includes(view.screen)) {
+      const co = state.companies.find(c => c.id === view.companyId);
+      topbarTitle.innerText = co ? (co.fullName || co.name) : 'Passary GST & TDS Management - Compliance Dashboard';
+    } else {
+      topbarTitle.innerText = 'Passary GST & TDS Management - Compliance Dashboard';
+    }
+  }
+
   renderNav();
 
   renderBreadcrumb();
@@ -1271,6 +1282,8 @@ function getGreeting() {
   });
   saveState();
 
+  // Always start on Home screen on app load
+  window.location.hash = '#/home';
   syncViewFromHash();
   render();
 })();

@@ -7,10 +7,13 @@
   --orange:var(--accent); --orange-soft:var(--accent-soft);
   --ink:#1B2436; --muted:#6B7280;
   --line:#E7EAF1; --card:#ffffff;
-  --bg1:#F4F7FD; --bg2:#F0F5FF;
+  --bg1:#E2E8F0; --bg2:#F1F5F9;
   --radius:20px; --radius-sm:12px;
-  --shadow-sm:0 2px 8px rgba(30,41,80,0.12);
-  --shadow-lg:0 18px 46px rgba(30,41,80,0.25);
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.15);
+  --shadow-side: 4px 0 24px rgba(0, 0, 0, 0.06);
+  --shadow-top: 0 4px 24px rgba(0, 0, 0, 0.06);
   --accent-shadow: rgba(52,211,153,0.3);
   --sidebar-grad: linear-gradient(135deg, #34D399, #10B981);
   --topbar-grad: linear-gradient(135deg, #34D399, #10B981);
@@ -47,11 +50,8 @@
 html,body{margin:0;padding:0;}
 body{
   font-family:'Lora',serif; color:var(--ink);
-  background:
-    radial-gradient(circle at 10% 0%, #eef3ff 0%, transparent 40%),
-    radial-gradient(circle at 90% 10%, #eafaf4 0%, transparent 45%),
-    linear-gradient(180deg, var(--bg1), var(--bg2));
-  min-height:100vh; -webkit-font-smoothing:antialiased;
+  background: linear-gradient(180deg, var(--bg1), var(--bg2));
+  min-height:100vh; -webkit-font-smoothing:antialiased; text-rendering: optimizeLegibility;
 }
 h1,h2,h3,.disp{font-family:'Lora',serif;}
 .mono{font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums;}
@@ -66,7 +66,7 @@ button,select,input{font-family:inherit;}
   width:280px; flex-shrink:0; padding:22px 14px; position:sticky; top:0; height:100vh;
   display:flex; flex-direction:column; overflow-y:auto; overflow-x:hidden;
   background:#fff; color:var(--ink);
-  border-right:1px solid var(--line); box-shadow:var(--shadow-md);
+  border-right:none; box-shadow:var(--shadow-side);
   transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, transform 0.3s ease, margin-left 0.3s ease;
 }
 .sidebar.collapsed {
@@ -155,7 +155,7 @@ button,select,input{font-family:inherit;}
   display:flex; align-items:center; justify-content:space-between;
   height:72px; padding:0 24px; position:sticky; top:0; z-index:5;
   background:#fff;
-  border-bottom:1px solid #E2E8F0;
+  border-bottom:none; box-shadow:var(--shadow-top);
 }
 .breadcrumb{display:flex; align-items:center; gap:8px;}
 .breadcrumb .seg{cursor:pointer; transition: color 0.2s ease;}
@@ -256,7 +256,7 @@ main{flex:1; padding:28px 32px 64px;}
 .company-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
 .co-card{
   background:#fff; color:var(--ink);
-  border:1px solid var(--line);
+  border:none;
   border-radius:24px; box-shadow:var(--shadow-sm); overflow:hidden; cursor:pointer;
   transition:transform .18s, box-shadow .18s; position:relative;
 }
@@ -302,7 +302,7 @@ main{flex:1; padding:28px 32px 64px;}
 .workspace-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:22px; max-width:900px;}
 .big-module-card{
   background: #ffffff;
-  border: 1px solid var(--line);
+  border: none;
   border-radius:24px; padding:34px 30px; cursor:pointer; color:var(--ink); position:relative; overflow:hidden;
   box-shadow:var(--shadow-sm); transition:transform .18s;
 }
@@ -322,7 +322,7 @@ main{flex:1; padding:28px 32px 64px;}
 /* ---------------- MODULE GRID (10 GST / 8 TDS) ---------------- */
 .mod-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:18px;}
 .mod-card{
-  background:#fff; color:var(--ink); border:1px solid var(--line); border-radius:18px; padding:20px; cursor:pointer;
+  background:#fff; color:var(--ink); border:none; border-radius:18px; padding:20px; cursor:pointer;
   transition:transform .16s, box-shadow .16s; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);
 }
 .mod-card .mc-glow{display:none;}
@@ -368,7 +368,7 @@ input[type=file]{display:none;}
 .sum-chip .l{font-size:10px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:6px;}
 .sum-chip .v{font-size:19px; font-weight:700;}
 
-.panel{background:#fff; border:1px solid var(--line); border-radius:18px; margin-bottom:20px; overflow:hidden; box-shadow:var(--shadow-sm);}
+.panel{background:#fff; border:none; border-radius:18px; margin-bottom:20px; overflow:hidden; box-shadow:var(--shadow-sm);}
 .panel-head{display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid var(--line);}
 .panel-head h3{font-size:14.5px; margin:0; font-weight:700;}
 .panel-body{padding:18px;}
