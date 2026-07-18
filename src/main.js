@@ -173,11 +173,25 @@ function render(){
   // Dynamic Topbar Title
   const topbarTitle = document.getElementById('topbarTitle');
   if (topbarTitle) {
-    if (view.companyId && ['workspace','gstModules','tdsModules','detail'].includes(view.screen)) {
-      const co = state.companies.find(c => c.id === view.companyId);
-      topbarTitle.innerText = co ? (co.fullName || co.name) : 'Passary GST & TDS Management - Compliance Dashboard';
-    } else {
-      topbarTitle.innerText = 'Passary GST & TDS Management - Compliance Dashboard';
+    if (view.screen === 'home') {
+      topbarTitle.innerText = 'Passary GST & TDS Management – Compliance Dashboard';
+    } else if (view.companyId) {
+      const co = getCompany(view.companyId);
+      if (co) {
+        if (view.screen === 'workspace') {
+          topbarTitle.innerText = co.fullName;
+        } else if (view.screen === 'gstModules') {
+          topbarTitle.innerText = co.fullName + ' – GST Working';
+        } else if (view.screen === 'tdsModules') {
+          topbarTitle.innerText = co.fullName + ' – TDS Working';
+        } else if (view.screen === 'detail') {
+          const mod = view.category === 'gst' ? GST_MODULES.find(m => m.id === view.moduleId) : TDS_MODULES.find(m => m.id === view.moduleId);
+          const catStr = view.category === 'gst' ? 'GST Working' : 'TDS Working';
+          topbarTitle.innerText = co.fullName + ' – ' + catStr + (mod ? ' – ' + mod.name : '');
+        } else {
+          topbarTitle.innerText = co.fullName;
+        }
+      }
     }
   }
 
@@ -377,12 +391,7 @@ function renderWorkspace(main){
     <div class="prem-ws-container">
       
       <div class="prem-header-row">
-        <div>
-          <h2 class="prem-title">${esc(c.fullName)}</h2>
-          <p class="prem-subtitle">Choose GST Working or TDS Working to continue. <span id="editDetailsLink" class="prem-link">Edit company details</span></p>
-        </div>
-        
-        <div class="prem-filters">
+        <div class="prem-filters" style="margin-top:0;">
           <div class="prem-filter-box">
             <span class="prem-filter-label">FINANCIAL YEAR</span>
             <select class="prem-filter-select">
@@ -560,7 +569,7 @@ function renderWorkspace(main){
       </div>
     </div>
   `;
-  document.getElementById('editDetailsLink').onclick = ()=> openCompanyEditModal(c.id);
+  // removed editDetailsLink handler
   document.getElementById('goGst').onclick = ()=>{ view={screen:'gstModules', companyId:c.id, moduleId:null, category:'gst'}; render(); };
   document.getElementById('goTds').onclick = ()=>{ view={screen:'tdsModules', companyId:c.id, moduleId:null, category:'tds'}; render(); };
 }
@@ -594,11 +603,8 @@ function renderModuleGrid(main, category){
       </div>`;
   });
   main.innerHTML = `
-    <div class="page-head" style="margin-bottom:20px;">
-      <h2 style="margin:0 0 8px 0;">${category==='gst' ? 'GST Working Modules' : 'TDS Working Modules'}</h2>
-      <p style="margin:0;">${category==='gst' ? '10 working areas covering returns, reconciliation and ITC.' : '8 section-wise TDS working areas.'}</p>
-    </div>
-    <div class="mod-grid">${cards}</div>
+    <div class="module-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px; margin-top:0px;">
+    ${cards}</div>
   `;
   main.querySelectorAll('.mod-card').forEach(card=>{
     card.onclick = ()=>{ view = {screen:'detail', companyId:c.id, moduleId:card.dataset.mid, category}; render(); };
